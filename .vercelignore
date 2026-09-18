@@ -1,0 +1,9 @@
+src
+node_modules
+jobs
+output
+*.log
+.env
+.env.*
+package.json
+package-lock.json

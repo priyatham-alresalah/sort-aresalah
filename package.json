@@ -1,11 +1,10 @@
 {
-  "name": "sti_docs",
+  "name": "sort-aresalah",
   "version": "1.0.0",
+  "private": true,
   "description": "Upload STI certificate PDFs and an Excel sheet, then download company-wise certificate folders.",
-  "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "test": "node src/test-sample.js"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
