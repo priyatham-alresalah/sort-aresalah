@@ -6,3 +6,6 @@ output/
 .vercel
 .env
 .env.*
+_deploy-files.json
+_sign.b64
+_vercel-deploy.json
