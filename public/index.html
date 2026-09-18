@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STI Certificate Sorter</title>
+    <style>
+      :root {
+        --green: #1b7a4e;
+        --green-dark: #145c3a;
+        --ink: #1c2330;
+        --muted: #5d6b7a;
+        --line: #d9e2ea;
+        --bg: #f3f6f4;
+        --card: #ffffff;
+        --warn: #9a4a12;
+        --err: #b42318;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background:
+          radial-gradient(circle at top right, #e7f4ec 0, transparent 28%),
+          var(--bg);
+        color: var(--ink);
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 36px 20px 64px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 32px;
+        letter-spacing: -0.03em;
+      }
+      p.sub {
+        color: var(--muted);
+        margin-bottom: 28px;
+        line-height: 1.5;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 16px;
+      }
+      .drop {
+        background: var(--card);
+        border: 1.5px dashed var(--line);
+        border-radius: 16px;
+        padding: 22px;
+        min-height: 160px;
+        cursor: pointer;
+        transition: border-color 0.15s, transform 0.15s;
+      }
+      .drop:hover, .drop.drag {
+        border-color: var(--green);
+        transform: translateY(-1px);
+      }
+      .drop h2 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+      .drop p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .files {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--green-dark);
+        line-height: 1.5;
+      }
+      .actions {
+        margin: 20px 0 8px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      button {
+        border: 0;
+        background: var(--green);
+        color: white;
+        padding: 12px 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      button.secondary {
+        background: #2d3a46;
+      }
+      .progress {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-top: 12px;
+        display: none;
+      }
+      .bar {
+        height: 10px;
+        background: #e7eee9;
+        border-radius: 99px;
+        overflow: hidden;
+        margin: 10px 0 8px;
+      }
+      .bar > span {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--green);
+        transition: width 0.2s;
+      }
+      .stats {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+        background: var(--card);
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 13px;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th { background: #eef5f1; }
+      .ok { color: var(--green-dark); font-weight: 600; }
+      .bad { color: var(--err); font-weight: 600; }
+      .error { color: var(--err); margin-top: 10px; }
+      @media (max-width: 800px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>STI Certificate Sorter</h1>
+      <p class="sub">
+        Upload one Excel attendance sheet and the certificate PDFs.
+        Processing stays in your browser: each page is rotated to landscape,
+        stamped with the instructor seal, matched to the Excel company, and
+        packed into one ZIP of company folders.
+      </p>
+
+      <div class="grid">
+        <div class="drop" id="excelDrop">
+          <h2>1. Excel file</h2>
+          <p>The sheet with Company Name and Delegate Name. Click or drop the file here.</p>
+          <div class="files" id="excelList"></div>
+          <input id="excelInput" type="file" accept=".xlsx,.xls" hidden />
+        </div>
+        <div class="drop" id="pdfDrop">
+          <h2>2. Certificate PDFs</h2>
+          <p>One or more PDFs. Each page is one certificate. Click or drop files here.</p>
+          <div class="files" id="pdfList"></div>
+          <input id="pdfInput" type="file" accept="application/pdf" multiple hidden />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="runBtn">Create company folders</button>
+        <button id="downloadBtn" class="secondary" disabled>Download ZIP</button>
+      </div>
+
+      <div class="progress" id="progress">
+        <div id="status">Waiting...</div>
+        <div class="bar"><span id="bar"></span></div>
+        <div class="stats" id="stats"></div>
+        <div class="error" id="error"></div>
+      </div>
+
+      <div id="tableWrap"></div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

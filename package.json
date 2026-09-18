@@ -1,0 +1,24 @@
+{
+  "name": "sti_docs",
+  "version": "1.0.0",
+  "description": "Upload STI certificate PDFs and an Excel sheet, then download company-wise certificate folders.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node src/test-sample.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "archiver": "^8.0.0",
+    "express": "^5.2.1",
+    "multer": "^2.4.0",
+    "mupdf": "^1.28.1",
+    "pdf-lib": "^1.17.1",
+    "sharp": "^0.35.4",
+    "tesseract.js": "^7.0.0",
+    "xlsx": "^0.18.5"
+  }
+}

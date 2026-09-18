@@ -1,0 +1,8 @@
+node_modules/
+jobs/
+_preview/
+output/
+*.log
+.vercel
+.env
+.env.*
